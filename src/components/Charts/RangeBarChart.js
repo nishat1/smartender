@@ -11,15 +11,15 @@ import {
 import { withTheme } from '@material-ui/core/styles';
 
 const RangeBarChart = (props) => {
-    const { theme, data, yAxisKey, xAxisKey } = props;
+    const { theme, data, xAxisDataKey, yAxisDataKey, maxRange } = props;
     return (
-        <ResponsiveContainer width="99%" height={225}>
+        <ResponsiveContainer width="99%" height="100%" minHeight={255}>
             <BarChart data={data} margin={{top: 24, right: 24}}>
-                <XAxis />
-                <YAxis type="number" domain={[0, 100]}/>
+                <XAxis dataKey={xAxisDataKey} />
+                <YAxis type="number" domain={[0, maxRange]}/>
                 <Tooltip />
                 <Legend />
-                <Bar dataKey={data.keys()} fill={theme.palette.primary.light} />
+                <Bar dataKey={yAxisDataKey} fill={theme.palette.primary.main} />
             </BarChart>
         </ResponsiveContainer>
     );

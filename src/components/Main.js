@@ -6,10 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import Topbar from './Appbar/Topbar';
-import SimpleBarChart from './Charts/SimpleBarChart';
-import SimpleLineChart from './Charts/SimpleLineChart';
+// import SimpleBarChart from './Charts/SimpleBarChart';
+// import SimpleLineChart from './Charts/SimpleLineChart';
 import Smartender from './Smartender';
 import QuickCard from './QuickCard';
+import CustomPieChart from './Charts/CustomPieChart';
 
 const styles = theme => ({
     root: {
@@ -129,6 +130,9 @@ class Main extends Component {
             // Get each smartender obj
             var smartenderObj = smartenderData[j];
 
+            // record drinks max volume for each obj
+            var drinksMaxVolume = 0;
+
             // If obj isn't undefined do some calculations and refactoring
             if(typeof(smartenderObj) !== 'undefined') {
                 var inventoryArr = smartenderObj.inventory;
@@ -163,6 +167,7 @@ class Main extends Component {
                     for( i = 0; i < drinksArr.length; i++ ) {
                         var drinkObj = drinksArr[i];
                         drinkObj.curr_volume = inventoryArr[i];
+                        drinksMaxVolume = drinkObj.max_volume;
                         drinksInv.push(drinkObj);
                     }
                     smartenderObj.drinks = drinksInv;
@@ -176,6 +181,7 @@ class Main extends Component {
                     this.createData('Lifetime Revenue', `$` + (weeklyLogSum.revenueSum + revenueThisWeek).toFixed(2))
                 ];
                 smartenderObj.smartenderTableRows = smartenderTableRows;
+                smartenderObj.drinksMaxVolume = drinksMaxVolume;
                 smartendersArr.push(smartenderObj);
             //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 /* End of refactoring for smartender array */
@@ -239,18 +245,16 @@ class Main extends Component {
                             ))}
                             <Grid spacing={24} item xs={12} container>
                                 <Grid item xs={12} md={6}>
-                                    <SimpleBarChart 
+                                    <CustomPieChart 
                                         data={this.state.smartenders}
-                                        xAxisKey="name"
-                                        yAxisKey="drinks_this_week"
-                                        colorInt={1} />
+                                        dataKey="drinks_this_week" 
+                                        dataTitle="Drinks this Week" />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                     <SimpleBarChart 
+                                    <CustomPieChart 
                                         data={this.state.smartenders}
-                                        xAxisKey="name"
-                                        yAxisKey="revenue_this_week"
-                                        colorInt={2} />
+                                        dataKey="revenue_this_week"
+                                        dataTitle="Revenue this Week" />
                                 </Grid>
                             </Grid>
                         </Grid>

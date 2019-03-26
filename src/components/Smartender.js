@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import SimpleLineChart from './Charts/SimpleLineChart';
+// import SimpleLineChart from './Charts/SimpleLineChart';
+import RangeBarChart from './Charts/RangeBarChart';
 import DoubleLineChart from './Charts/DoubleLineChart';
-import DoubleBarChart from './Charts/DoubleBarChart';
+// import DoubleBarChart from './Charts/DoubleBarChart';
 import SmartenderTable from './SmartenderTable';
 
 const styles = theme => ({
@@ -28,7 +29,7 @@ class Smartender extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Grid item xs={12} container>
+            <Grid spacing={24} item xs={12} container>
                 <Grid item xs={12} md={4}>
                     <SmartenderTable 
                         colOneHeader={this.props.item.name} 
@@ -43,11 +44,11 @@ class Smartender extends Component {
                         xAxisDataKey="date"/>
                 </Grid>
                 <Grid item xs={12} md={4} className={classes.gridPadding}>
-                    <DoubleBarChart 
+                    <RangeBarChart 
                         data={this.props.item.drinks}
-                        xAxisKey="name"
-                        yAxisKeyBarA="curr_volume"
-                        yAxisKeyBarB="max_volume" />
+                        xAxisDataKey="name"
+                        yAxisDataKey="curr_volume"
+                        maxRange={this.props.item.drinksMaxVolume} />
                 </Grid>
             </Grid>
         );
