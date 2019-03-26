@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import SimpleLineChart from './Charts/SimpleLineChart';
+import DoubleLineChart from './Charts/DoubleLineChart';
 import DoubleBarChart from './Charts/DoubleBarChart';
 import SmartenderTable from './SmartenderTable';
 
@@ -35,7 +36,11 @@ class Smartender extends Component {
                         data={this.props.item.smartenderTableRows}/>
                 </Grid>
                 <Grid item xs={12} md={4} className={classes.gridPadding}>
-                    <SimpleLineChart data={this.props.item.weekly_log} />
+                    <DoubleLineChart 
+                        data={this.props.item.weekly_log} 
+                        yAxisDataKeyA="drinks"
+                        yAxisDataKeyB="revenue" 
+                        xAxisDataKey="date"/>
                 </Grid>
                 <Grid item xs={12} md={4} className={classes.gridPadding}>
                     <DoubleBarChart 

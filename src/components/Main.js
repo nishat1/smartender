@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 
 import Topbar from './Appbar/Topbar';
 import SimpleBarChart from './Charts/SimpleBarChart';
+import SimpleLineChart from './Charts/SimpleLineChart';
 import Smartender from './Smartender';
 import QuickCard from './QuickCard';
 
@@ -236,11 +237,21 @@ class Main extends Component {
                             {this.state.smartenders.map((item, index) => (
                                 <Smartender item={item} key={index} />
                             ))}
-                            <Grid item xs={12}>
-                                <SimpleBarChart 
-                                    data={this.state.smartenders}
-                                    xAxisKey="name"
-                                    yAxisKey="drinks_this_week" />
+                            <Grid spacing={24} item xs={12} container>
+                                <Grid item xs={12} md={6}>
+                                    <SimpleBarChart 
+                                        data={this.state.smartenders}
+                                        xAxisKey="name"
+                                        yAxisKey="drinks_this_week"
+                                        colorInt={1} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                     <SimpleBarChart 
+                                        data={this.state.smartenders}
+                                        xAxisKey="name"
+                                        yAxisKey="revenue_this_week"
+                                        colorInt={2} />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
