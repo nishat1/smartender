@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import Topbar from './Appbar/Topbar';
-// import SimpleBarChart from './Charts/SimpleBarChart';
-// import SimpleLineChart from './Charts/SimpleLineChart';
 import Smartender from './Smartender';
 import QuickCard from './QuickCard';
 import CustomPieChart from './Charts/CustomPieChart';
@@ -53,6 +51,10 @@ const styles = theme => ({
 
 const herokuHTTPS = "https://cors-anywhere.herokuapp.com/";
 const hostname =  herokuHTTPS + "http://ec2-13-58-113-143.us-east-2.compute.amazonaws.com/machines";
+const barcoinAPIOperator = herokuHTTPS + "http://ec2-18-219-145-4.us-east-2.compute.amazonaws.com:3002/operator/";
+const barcoinAPIBalanceEndpoint = "/balance";
+const barcoinAPIWalletEndpoint = "/smartenderAccountWallet";
+const BAR_ID = 0; // hardcoded bar ID used to index wallet address -- can be passed in as env variable for scalability
 
 // used to index table rows
 var id = 0;
@@ -67,36 +69,100 @@ class Main extends Component {
         currentEarnings: 'N/A',
         totalSmartenders: 0,
         bestSmartender: 0,
-        openSnackbar: false
+        openSnackbar: false,
+        blockchainWallet: "b30e5d728f79e253f00268d27cddced6230a0f01cd5e705fb8cb8f1fe0d18176",
+        barcoinBalance: 0
     }
 
     componentDidMount() {
-        this.getSmartenderDataOnce();
+        this.getSmartenderData();
+        this.getWalletAddress();
+        this.getBarcoinBalance();
     }
 
-    getSmartenderData = async (event) => {
+    /**
+     * Click listener for load data button.
+     */
+    onClickLoadData = (event) => {
         event.preventDefault();
-    
+        this.getSmartenderData();
+        this.getWalletAddress();
+        this.getBarcoinBalance();
+        this.setState({ openSnackbar: true });
+    }
+
+    /**
+     * Gets smartender data from server and modifies it for the web app.
+     */
+    getSmartenderData = async () => {    
         await fetch(`${hostname}`)
         .then(response => response.json())
         .then(contents => {
             // console.log(contents);
             this.setStateSmartender(contents);
-            this.setState({ openSnackbar: true });
         })
         .catch((e) => console.log(e));
     }
 
-    // Used for compnentDidMount
-    getSmartenderDataOnce = async () => {
-        await fetch(`${hostname}`)
+    /**
+     * Calls the barcoin api and gets the wallet address for the current bar.
+     * Current bar specified by BAR_ID.
+     */
+    getWalletAddress = async () => {
+
+        var apiURL = barcoinAPIOperator + barcoinAPIWalletEndpoint;
+
+        await fetch(`${apiURL}`)
         .then(response => response.json())
         .then(contents => {
-            this.setStateSmartender(contents);
+            this.setWalletAddress(contents);
+        })
+        .catch((e) => console.log(e));
+
+    }
+
+    /**
+     * Sets the state for the blockchainWallet.
+     */
+    setWalletAddress = (data) => {
+        if(data !== undefined) {
+            this.setState({
+                blockchainWallet: data.addresses[BAR_ID]
+            })
+        }
+    }
+
+    /**
+     * Calls Barcoin API and gets barcoin 
+     * balance for the wallet address
+     * requested from getWalletAddress.
+     */
+    getBarcoinBalance = async () => {
+
+        var apiURL = barcoinAPIOperator + this.state.blockchainWallet + barcoinAPIBalanceEndpoint;
+
+        await fetch(`${apiURL}`)
+        .then(response => response.json())
+        .then(contents => {
+            this.setBarcoinBalance(contents);
         })
         .catch((e) => console.log(e));
     }
 
+    /**
+     * Sets state for barcoin balance
+     */
+    setBarcoinBalance = (data) => {
+        if(data !== undefined) {
+            this.setState({ 
+                barcoinBalance: data.balance 
+            });
+        }
+    }
+
+    /**
+     * Returns the sum of all time drinks and all time revenues.
+     */
     sumWeeklyLog = (data) => {
         var i;
         var sum = {
@@ -111,6 +177,9 @@ class Main extends Component {
         return sum;
     }
 
+    /**
+     * Reformats smartender data from server to be used for web app.
+     */
     setStateSmartender = (data) => {
 
         // variables used for refactoring smartender data
@@ -137,7 +206,7 @@ class Main extends Component {
             var drinksMaxVolume = 0;
 
             // If obj isn't undefined do some calculations and refactoring
-            if(typeof(smartenderObj) !== 'undefined') {
+            if(smartenderObj !== undefined) {
                 var inventoryArr = smartenderObj.inventory;
 
                 /* Calculations for Quick Cards */
@@ -242,7 +311,7 @@ class Main extends Component {
                                     </div>
                                     <div>
                                         <Button variant="outlined" className={classes.outlinedButton} 
-                                            onClick={this.getSmartenderData}
+                                            onClick={this.onClickLoadData}
                                         >
                                             Load Data
                                         </Button>
@@ -255,7 +324,7 @@ class Main extends Component {
                                 <QuickCard dataVal={this.state.currentDrinks} dataKey="Current Drinks"/>
                                 <QuickCard dataVal={this.state.currentEarnings} dataKey="Current Earnings"/>
                                 <QuickCard dataVal={this.state.totalSmartenders} dataKey="Total Smartenders"/>
-                                <QuickCard dataVal={this.state.bestSmartender} dataKey="Best Smartender"/>
+                                <QuickCard dataVal={this.state.barcoinBalance} dataKey="Total Barcoins"/>
                             </Grid>
                             <Grid spacing={24} item xs={12} container>
                                 <Grid item xs={12} md={6}>
