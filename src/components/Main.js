@@ -11,6 +11,7 @@ import Topbar from './Appbar/Topbar';
 import Smartender from './Smartender';
 import QuickCard from './QuickCard';
 import CustomPieChart from './Charts/CustomPieChart';
+import SimpleSnackbar from './SimpleSnackbar';
 
 const styles = theme => ({
     root: {
@@ -65,7 +66,8 @@ class Main extends Component {
         currentDrinks: 0,
         currentEarnings: 'N/A',
         totalSmartenders: 0,
-        bestSmartender: 0
+        bestSmartender: 0,
+        openSnackbar: false
     }
 
     componentDidMount() {
@@ -80,6 +82,7 @@ class Main extends Component {
         .then(contents => {
             // console.log(contents);
             this.setStateSmartender(contents);
+            this.setState({ openSnackbar: true });
         })
         .catch((e) => console.log(e));
     }
@@ -206,12 +209,26 @@ class Main extends Component {
         return { id, name, details };
     }
 
+    handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+    
+        this.setState({ openSnackbar: false });
+    };
+
     render() {
         const { classes } = this.props;
         return (
             <React.Fragment>
                 <CssBaseline />
                 <Topbar />
+                <SimpleSnackbar 
+                    openSnackbar={this.state.openSnackbar} 
+                    handleClose={this.handleSnackbarClose}
+                    duration={3000}
+                    variant="success"
+                    message="Data Updated" />
                 <div className={classes.root}>
                     <Grid container justify="center">
                         <Grid spacing={24} alignItems="center" justify="center" container className={classes.grid}>
@@ -240,9 +257,6 @@ class Main extends Component {
                                 <QuickCard dataVal={this.state.totalSmartenders} dataKey="Total Smartenders"/>
                                 <QuickCard dataVal={this.state.bestSmartender} dataKey="Best Smartender"/>
                             </Grid>
-                            {this.state.smartenders.map((item, index) => (
-                                <Smartender item={item} key={index} />
-                            ))}
                             <Grid spacing={24} item xs={12} container>
                                 <Grid item xs={12} md={6}>
                                     <CustomPieChart 
@@ -257,6 +271,9 @@ class Main extends Component {
                                         dataTitle="Revenue this Week" />
                                 </Grid>
                             </Grid>
+                            {this.state.smartenders.map((item, index) => (
+                                <Smartender item={item} key={index} />
+                            ))}
                         </Grid>
                     </Grid>
                 </div>

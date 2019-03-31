@@ -20,7 +20,7 @@ export default class CustomPieChart extends PureComponent {
             <PieChart>
                 <text 
                     x="50%" 
-                    y="100%"
+                    y="7%"
                     textAnchor="middle" 
                     dominantBaseline="alphabetic"
                     style={{fontWeight: 'bold'}}>
