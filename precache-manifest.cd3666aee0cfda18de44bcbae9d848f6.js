@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/smartender/static/js/runtime~main.8105a4e9.js"
   },
   {
-    "revision": "e95bca5e62ff414238c8",
-    "url": "/smartender/static/js/main.5f692940.chunk.js"
+    "revision": "69bc42eabfd58dff6eec",
+    "url": "/smartender/static/js/main.afb8d1c0.chunk.js"
   },
   {
-    "revision": "f90216511a30a4e665a6",
-    "url": "/smartender/static/js/2.7d6228bf.chunk.js"
+    "revision": "7cb3ffdcda6d03fc9425",
+    "url": "/smartender/static/js/2.fdf1bc43.chunk.js"
   },
   {
-    "revision": "e95bca5e62ff414238c8",
+    "revision": "69bc42eabfd58dff6eec",
     "url": "/smartender/static/css/main.304b7164.chunk.css"
   },
   {
-    "revision": "5fab05702a1a7b52c24e7b2cfbecbb88",
+    "revision": "589450717318a044ab2b768efe3ecda2",
     "url": "/smartender/index.html"
   }
 ];
