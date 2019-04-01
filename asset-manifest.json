@@ -1,13 +1,13 @@
 {
   "main.css": "/smartender/static/css/main.304b7164.chunk.css",
-  "main.js": "/smartender/static/js/main.afb8d1c0.chunk.js",
-  "main.js.map": "/smartender/static/js/main.afb8d1c0.chunk.js.map",
+  "main.js": "/smartender/static/js/main.045205f8.chunk.js",
+  "main.js.map": "/smartender/static/js/main.045205f8.chunk.js.map",
   "runtime~main.js": "/smartender/static/js/runtime~main.8105a4e9.js",
   "runtime~main.js.map": "/smartender/static/js/runtime~main.8105a4e9.js.map",
-  "static/js/2.fdf1bc43.chunk.js": "/smartender/static/js/2.fdf1bc43.chunk.js",
-  "static/js/2.fdf1bc43.chunk.js.map": "/smartender/static/js/2.fdf1bc43.chunk.js.map",
+  "static/js/2.296c65de.chunk.js": "/smartender/static/js/2.296c65de.chunk.js",
+  "static/js/2.296c65de.chunk.js.map": "/smartender/static/js/2.296c65de.chunk.js.map",
   "index.html": "/smartender/index.html",
-  "precache-manifest.cd3666aee0cfda18de44bcbae9d848f6.js": "/smartender/precache-manifest.cd3666aee0cfda18de44bcbae9d848f6.js",
+  "precache-manifest.a1c068aced21edd5d5d03d56968826f9.js": "/smartender/precache-manifest.a1c068aced21edd5d5d03d56968826f9.js",
   "service-worker.js": "/smartender/service-worker.js",
   "static/css/main.304b7164.chunk.css.map": "/smartender/static/css/main.304b7164.chunk.css.map",
   "static/media/favicon.ico": "/smartender/static/media/favicon.22c2d5fa.ico"
