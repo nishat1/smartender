@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Link, withRouter } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -139,7 +140,7 @@ class Topbar extends Component {
                                             <AppBar title="Menu" />
                                             <List>
                                                 {Menu.map((item, index) => (
-                                                    <ListItem button key={item.label} onClick={this.mobileMenuClose}>
+                                                    <ListItem component={Link} to={{pathname: item.pathname, search: this.props.location.search}} button key={item.label} onClick={this.mobileMenuClose}>
                                                         <ListItemText primary={item.label} />
                                                     </ListItem>
                                                 ))}
@@ -152,7 +153,7 @@ class Topbar extends Component {
                                             onChange={this.handleChange}
                                         >
                                             {Menu.map((item, index) => (
-                                                <Tab key={index} classes={{root: classes.tabItem}} label={item.label} />
+                                                <Tab key={index} component={Link} to={{pathname: item.pathname, search: this.props.location.search}} classes={{root: classes.tabItem}} label={item.label} />
                                             ))}
                                         </Tabs>
                                     </div>
@@ -166,4 +167,4 @@ class Topbar extends Component {
     }
 }
 
-export default withStyles(styles)(Topbar);
+export default withRouter(withStyles(styles)(Topbar));
