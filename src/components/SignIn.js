@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 
+// Code referenced from:
+// https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/page-layout-examples/sign-in
+
 const styles = theme => ({
   main: {
     width: 'auto',
