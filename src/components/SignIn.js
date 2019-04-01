@@ -50,8 +50,29 @@ const styles = theme => ({
 
 class SignIn extends Component {
 
-    signInUser = (event) => {
-        this.props.history.push('/home');
+    state = {
+        email: "",
+        password: "",
+        invalidEmailPassword: false
+    }
+
+    handleEmailChange = (event) => {
+        this.setState({ email: event.target.value });
+    }
+
+    handlePasswordChange = (event) => {
+        this.setState({ password: event.target.value });
+    }
+
+    onSubmit = (event) => {
+        event.preventDefault();
+
+        if(this.state.email === "smartender@cpen.ca" && this.state.password === "smartender") {
+            this.props.authenticateUser(true);
+            this.props.history.push('/home');
+        } else {
+            this.setState({ invalidEmailPassword: true });
+        }
     }
 
     render() {
@@ -67,14 +88,14 @@ class SignIn extends Component {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <form className={classes.form} onSubmit={(e) => this.signInUser(e)}>
+                        <form className={classes.form} onSubmit={this.onSubmit}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input id="email" name="email" autoComplete="email" autoFocus onChange={(e) => this.handleEmailChange(e)}/>
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
-                                <Input name="password" type="password" id="password" autoComplete="current-password" />
+                                <Input name="password" type="password" id="password" autoComplete="current-password" onChange={(e) => this.handlePasswordChange(e)}/>
                             </FormControl>
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -89,6 +110,9 @@ class SignIn extends Component {
                             >
                                 Sign in
                             </Button>
+                            {this.state.invalidEmailPassword && <Typography variant="subtitle2" color="error" >
+                                Invalid Email or Password
+                            </Typography>}
                         </form>
                     </Paper>
                 </main>
