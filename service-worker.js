@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/smartender/precache-manifest.85f36234816d27e4f338022f5071218a.js"
+  "/smartender/precache-manifest.a89a51cd54e5f4082f0552deb909573a.js"
 );
 
 workbox.clientsClaim();
