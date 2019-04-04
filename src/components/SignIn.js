@@ -57,7 +57,7 @@ class SignIn extends Component {
     }
 
     handleEmailChange = (event) => {
-        this.setState({ email: event.target.value });
+        this.setState({ email: event.target.value.trim().toLowerCase() });
     }
 
     handlePasswordChange = (event) => {
